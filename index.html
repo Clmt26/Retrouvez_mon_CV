@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enigmes pour trouver mon CV</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #e0f7fa;
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      margin-bottom: 20px;
+      color: #00796b;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .active {
+      display: block;
+    }
+
+    .input-field {
+      margin: 10px 0;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #ffab00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #ffa000;
+    }
+
+    .error {
+      color: red;
+    }
+
+    .success {
+      color: #388e3c;
+      font-size: 1.5em;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>Résolvez les énigmes pour accéder à mon CV</h1>
+
+    <div id="step1" class="step active">
+      <h2>Énigme 1 : Trouver le nombre</h2>
+      <p>Je suis un nombre situé entre 20 et 30. Je suis associé au nombre de lettres dans un alphabet universel. Qui suis-je ?</p>
+      <div class="input-field">
+        <input type="number" id="answer1" placeholder="Votre réponse" onkeypress="return event.key !== 'Enter';">
+      </div>
+      <button onclick="checkAnswer(1)">Valider</button>
+      <p id="error1" class="error" aria-live="assertive"></p>
+    </div>
+
+    <div id="step2" class="step">
+      <h2>Épreuve 2 : Trouver le chiffre</h2>
+      <p>Combien de joueurs de champ y a-t-il dans une équipe de football classique ?</p>
+      <div class="input-field">
+        <input type="number" id="answer2" placeholder="Votre réponse" onkeypress="return event.key !== 'Enter';">
+      </div>
+      <button onclick="checkAnswer(2)">Valider</button>
+      <p id="error2" class="error" aria-live="assertive"></p>
+    </div>
+
+    <div id="step3" class="step">
+      <h2>Calcul 3 : Trouver l'année</h2>
+      <p>Si vous soustrayez 3 à mon année, vous obtenez l'année où l'euro est devenu la monnaie officielle dans plusieurs pays européens. Quelle est cette année ?</p>
+      <div class="input-field">
+        <input type="number" id="answer3" placeholder="Votre réponse" onkeypress="return event.key !== 'Enter';">
+      </div>
+      <button onclick="checkAnswer(3)">Valider</button>
+      <p id="error3" class="error" aria-live="assertive"></p>
+    </div>
+
+    <div id="coffre" class="step">
+      <h2>Félicitations !</h2>
+      <p>Voici le code pour ouvrir le coffre : <strong>26 10 2003</strong></p>
+      <p class="success">Vous avez débloqué mon CV !</p>
+      <a href="cv.pdf" target="_blank">Télécharger mon CV</a>
+    </div>
+  </div>
+
+  <script>
+    const correctAnswers = {
+      1: 26,
+      2: 10,
+      3: 2003
+    };
+
+    function checkAnswer(step) {
+      const answer = parseInt(document.getElementById('answer' + step).value);
+      const errorElement = document.getElementById('error' + step);
+
+      if (isNaN(answer)) {
+        errorElement.textContent = "Veuillez entrer un nombre valide.";
+        return;
+      }
+
+      if (answer === correctAnswers[step]) {
+        errorElement.textContent = "";
+        document.getElementById('step' + step).classList.remove('active');
+        if (step < 3) {
+          document.getElementById('step' + (step + 1)).classList.add('active');
+        } else {
+          document.getElementById('coffre').classList.add('active');
+        }
+      } else {
+        errorElement.textContent = "Désolé, ce n'est pas la bonne réponse. Veuillez réessayer.";
+      }
+    }
+  </script>
+
+</body>
+</html>
